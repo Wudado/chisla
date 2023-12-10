@@ -53,7 +53,7 @@ QVector<pair<double, double>> MainWindow::graph(QCustomPlot *customPlot, int m)
 {
     double xMin = 0; //x range
     double xMax = 100; //
-    //int m = 3; //degree of approximating polynomial
+    //m = 2; //degree of approximating polynomial
 
     int N = 21;
     QVector<pair<double, double>> F = {
@@ -83,8 +83,12 @@ QVector<pair<double, double>> MainWindow::graph(QCustomPlot *customPlot, int m)
     //int N;
     //QVector<pair<double, double>> F = readFromFile("\\a.txt", N);
 
+    QVector<double> xDot, yDot;
+
     for (int i = 0; i < N; i++) {
         cout << F[i].first << "  " << F[i].second << endl;
+        xDot.push_back(F[i].first);
+        yDot.push_back(F[i].second);
     }
 
     QVector<QVector<double>> SUMX(m + 1);
@@ -123,8 +127,11 @@ QVector<pair<double, double>> MainWindow::graph(QCustomPlot *customPlot, int m)
     for(int i = 0; i < count; i++){
         double Y = 0;
         for(int j = m; j >= 0; j--){
-            Y = Y + A[j]*pow(x[i], j);
+            Y = Y + A[j]*pow(x[i], j);         
         }
+      //  if(x[i]==0) {
+      //      y[i]=A[m];
+       // }
         y.push_back(Y);
     }
 
@@ -145,6 +152,12 @@ QVector<pair<double, double>> MainWindow::graph(QCustomPlot *customPlot, int m)
 
     customPlot->xAxis->setRange(xMin, xMax);
     customPlot->yAxis->setRange(*min_element(y.begin(), y.end())-0.01, *max_element(y.begin(), y.end())+0.01);
+
+    customPlot->addGraph();
+    customPlot->graph(1)->setData(xDot, yDot);
+    customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
+    customPlot->graph(1)->setPen(QPen(QColor(255, 69, 0)));
+    customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
 
     return(F);
 }
