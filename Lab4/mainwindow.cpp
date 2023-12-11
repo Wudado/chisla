@@ -3,6 +3,7 @@
 #include "Functions.h"
 #include <algorithm>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -93,7 +94,7 @@ QVector<pair<double, double>> MainWindow::graph(QCustomPlot *customPlot, int m)
 
     QVector<QVector<double>> SUMX(m + 1);
 
-    for (int i = 1; i <= m; ++i) {
+    for (int i = 0; i <= m; ++i) {
         SUMX[i].resize(m + 1);
         for (int j = 0; j <= m; ++j) {
             double sum = 0;
@@ -104,7 +105,6 @@ QVector<pair<double, double>> MainWindow::graph(QCustomPlot *customPlot, int m)
         }
     }
 
-    SUMX[0].resize(m + 1);
     SUMX[0][0] = N;
 
     QVector<double> PRAW(m + 1);
