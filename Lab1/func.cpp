@@ -190,12 +190,11 @@ vector<float> calculateNev(const vector<vector<float>>& matrixA, const vector<fl
 pair<float, int> maximum(const vector<float>& matrix) {
     float max = 0.0f;
     int n = matrix.size();
-    int line;
+    int line = 0;
     pair<float, int> res;
 
-    for (int i = 0; i < n - 1; i++) {
-        if (abs(matrix[i] > matrix[i + 1])) { max = matrix[i]; line = i; }
-        else { max = matrix[i + 1]; line = i + 1; }
+    for (int i = 0; i < n; i++) {
+        if (max < abs(matrix[i])) { max = matrix[i]; line = i; }
     }
 
     res.first = max;
