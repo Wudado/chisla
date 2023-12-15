@@ -32,14 +32,13 @@ double calculate_simpson(double(&function)(const double&), const double& A, cons
 }
 
 double simpson_method(double(&function)(const double&, const double&), const double& A, const double& B, const double& C, const double& D, const unsigned long& n) {
-	unsigned long m = n / 2;
 	double hx = (B - A) / (double(2) * n);
-	double hy = (D - C) / (double(2) * m);
+	double hy = (D - C) / (double(2) * n);
 
 	double result = 0.0;
 
 	for (int i = 0; i <= n - 1; ++i) {
-		for (int j = 0; j <= m - 1; ++j) {
+		for (int j = 0; j <= n - 1; ++j) {
 			result += function(A + (double(i) * 2) * hx, C + (double(j) * 2) * hy) +
 				4 * function(A + (double(i) * 2 + 1) * hx, C + (double(j) * 2) * hy) +
 				function(A + (double(i) * 2 + 2) * hx, C + (double(j) * 2) * hy) +
