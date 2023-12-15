@@ -42,5 +42,5 @@ int main() {
 
     std::cout << "\n" << "------------------------------------------------------------------\n";
     cout << "Норма: " << fault.first << endl;
-    cout << "Относительная погрешность: " << fault.first / result[fault.second] << endl;
+    cout << "Относительная погрешность: " << relativeError(coefficientsMatrix, solution) << endl;
 }
