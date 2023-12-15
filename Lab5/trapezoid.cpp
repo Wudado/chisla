@@ -3,7 +3,7 @@
 double trapezoid_method(double(&function)(const double&), const double& A, const double& B, const unsigned long& n) {
 	double h = (B - A) / n; //шаг(step)(خطوة)(βήμα)(Schritt)(ステップ)(שלב)(ნაბიჯი)
 	double f = 0;
-	for (int i = 1; i < n - 1; ++i) {
+	for (int i = 1; i < n; ++i) {
 		f += function(A + h * i);
 	}
 
