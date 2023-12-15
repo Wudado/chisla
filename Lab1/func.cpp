@@ -94,7 +94,7 @@ vector<float> solveSystem(vector<vector<float>> matrixA, vector<float> matrixB) 
 
         float pivot = matrixA[i][i];
         if (pivot == 0) {
-            cout << "Íåâîçìîæíî ðåøèòü ñèñòåìó (îäèí èç êîýôôèöèåíòîâ ðàâåí 0)";
+            cout << "ÃÃ¥Ã¢Ã®Ã§Ã¬Ã®Ã¦Ã­Ã® Ã°Ã¥Ã¸Ã¨Ã²Ã¼ Ã±Ã¨Ã±Ã²Ã¥Ã¬Ã³ (Ã®Ã¤Ã¨Ã­ Ã¨Ã§ ÃªÃ®Ã½Ã´Ã´Ã¨Ã¶Ã¨Ã¥Ã­Ã²Ã®Ã¢ Ã°Ã Ã¢Ã¥Ã­ 0)";
             return {};
         }
         for (int j = i; j <= n; ++j) {
@@ -153,22 +153,23 @@ vector<float> calculateResiduals(vector<vector<float>>& coefficientsMatrix, vect
     return residuals;
 }
 
-float calculateRelativeError(const vector<float>& residuals, const vector<float>& solution) {
-    int n = residuals.size();
-    float residualNorm = 0.0;
-    float solutionNorm = 0.0;
-
-    for (int i = 0; i < n; ++i) {
-        residualNorm += residuals[i] * residuals[i];
-        solutionNorm += solution[i] * solution[i];
+float calculateRelativeError(vector<vector<float>> matrixA, const vector<float>& solution) {
+    int n = matrixA.size();
+    vector<float> matrixB(n);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            matrixB[i] += matrixA[i][j] * solution[j];
+        }
     }
 
-    residualNorm = sqrt(residualNorm);
-    solutionNorm = sqrt(solutionNorm);
+    vector<float> new_solution = calculate(matrixA, matrixB);
 
-    float relativeError = residualNorm / solutionNorm;
+    vector<float> delta;
+    for (int i = 0; i < n; i++) {
+        delta.push_back(abs(new_solution[i] - solution[i]));
+    }
 
-    return relativeError;
+    return maximum(delta).first / maximum(solution).first;
 }
 
 vector<float> calculateNev(const vector<vector<float>>& matrixA, const vector<float>& matrixB, const vector<float>& solution) {
